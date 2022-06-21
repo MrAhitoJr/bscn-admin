@@ -248,18 +248,20 @@ justify-content: end;
             <form-control class="gr2-3">
                 <select id="plan_type" name="plan" required>
                     <option value="" hidden>SELECT PLAN/BUNDLE</option>
-                    <option id='bundle-1' style="display:none" value="1300">PLAN 1 - 15Mbps FIBER + CATV</option>
-                    <option id='bundle-2' style="display:none" value="1600">PLAN 2 - 30Mbps FIBER + CATV</option>
-                    <option id='bundle-3' style="display:none" value="1750">PLAN 3 - 50Mbps FIBER + CATV</option>
-                    <option id='bundle-4' style="display:none" value="1850">PLAN 4 - 100Mbps FIBER + CATV</option>
-                    <option id='bundle-5' style="display:none" value="2600">PLAN 5 - 250Mbps FIBER + CATV</option>
-                    <option id='bundle-6' style="display:none" value="3100">PLAN 6 - 350Mbps FIBER + CATV</option>
-                    <option id='netOnly-1' style="display:none" value="1500">INTERNET ONLY - 100Mbps FIBER
-                    </option>
-                    <option id='netOnly-2' style="display:none" value="2250">INTERNET ONLY - 250Mbps FIBER
-                    </option>
-                    <option id='netOnly-3' style="display:none" value="2750">INTERNET ONLY - 350Mbps FIBER
-                    </option>
+                    <?php
+                    include '../include/db.inc.php';
+                        $sql = "SELECT * FROM package_tbl";
+
+                        $result = $con->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                               echo"<option id='".$row['code']."' style='display:none' value='".$row['code']."'>".$row['desc_']."</option>";
+                            }
+                        }
+                        mysqli_free_result($result);
+                        $con->close();
+
+                    ?>
                 </select>
             </form-control>
             <form-control class="gr2-1">
@@ -267,14 +269,33 @@ justify-content: end;
             </form-control>
 
             <span class="header1 gr1">Equipment Details</span>
-            <form-control class="gr2-1">
+            <form-control class="gr5-1">
                 <input type="text" placeholder="IP ADDRESS" name="ip" id="ip" required disabled/>
             </form-control>
-            <form-control class="gr2-2">
+            <form-control class="gr5-2">
                 <input type="text" placeholder="MAC ADDRESS" name="mac" id="mac" required disabled/>
             </form-control>
-            <form-control class="gr2-3">
+            <form-control class="gr5-3">
                 <input type="text" placeholder="SERIAL NUMBER" name="serial" id="serial" required disabled/>
+            </form-control>
+            <form-control class="gr5-4">
+                <select id="onu_model" name="onu_model" required>
+                    <option value="" hidden>SELECT ONU MODEL</option>
+                    <?php
+                    include '../include/db.inc.php';
+                        $sql = "SELECT * FROM onu_tbl";
+
+                        $result = $con->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                               echo"<option id='".$row['code']."'  value='".$row['code']."'>".$row['dec_']."</option>";
+                            }
+                        }
+                        mysqli_free_result($result);
+                        $con->close();
+
+                    ?>
+                </select>
             </form-control>
             <form-control class="gr5-1">
                 <input type="text" placeholder="BOX NUMBER" name="boxn" id="boxn" required disabled/>
@@ -330,6 +351,7 @@ function selectInst(el) {
         $('#ip').prop('disabled', 'disabled');
         $('#mac').prop('disabled', 'disabled');
         $('#serial').prop('disabled', 'disabled');
+        $('#onu_model').prop('disabled', 'disabled');
         $('#nap').prop('disabled', 'disabled');
         $('#slot').prop('disabled', 'disabled');
         $('#layer').prop('disabled', 'disabled');
@@ -352,9 +374,9 @@ function selectInst(el) {
         document.getElementById("bundle-4").style.display = "none";
         document.getElementById("bundle-5").style.display = "none";
         document.getElementById("bundle-6").style.display = "none";
-        document.getElementById("netOnly-1").style.display = "none";
-        document.getElementById("netOnly-2").style.display = "none";
-        document.getElementById("netOnly-3").style.display = "none";
+        document.getElementById("inetOnly-1").style.display = "none";
+        document.getElementById("inetOnly-2").style.display = "none";
+        document.getElementById("inetOnly-3").style.display = "none";
 
     }
     if (el.value == 'netonly' || el.value == 'fbr_netonly') {
@@ -365,14 +387,15 @@ function selectInst(el) {
         document.getElementById("bundle-4").style.display = "none";
         document.getElementById("bundle-5").style.display = "none";
         document.getElementById("bundle-6").style.display = "none";
-        document.getElementById("netOnly-1").style.display = "flex";
-        document.getElementById("netOnly-2").style.display = "flex";
-        document.getElementById("netOnly-3").style.display = "flex";
+        document.getElementById("inetOnly-1").style.display = "flex";
+        document.getElementById("inetOnly-2").style.display = "flex";
+        document.getElementById("inetOnly-3").style.display = "flex";
         $('#boxn').prop('disabled', 'disabled');
         $('#cardn').prop('disabled', 'disabled');
         $('#ip').prop('disabled',  false);
         $('#mac').prop('disabled',  false);
         $('#serial').prop('disabled',  false);
+        $('#onu_model').prop('disabled', false);
         $('#nap').prop('disabled',  false);
         $('#slot').prop('disabled',  false);
         $('#layer').prop('disabled',  false);
@@ -390,14 +413,15 @@ function selectInst(el) {
         document.getElementById("bundle-4").style.display = "flex";
         document.getElementById("bundle-5").style.display = "flex";
         document.getElementById("bundle-6").style.display = "flex";
-        document.getElementById("netOnly-1").style.display = "none";
-        document.getElementById("netOnly-2").style.display = "none";
-        document.getElementById("netOnly-3").style.display = "none";
+        document.getElementById("inetOnly-1").style.display = "none";
+        document.getElementById("inetOnly-2").style.display = "none";
+        document.getElementById("inetOnly-3").style.display = "none";
         $('#boxn').prop('disabled', false);
         $('#cardn').prop('disabled', false);
         $('#ip').prop('disabled',  false);
         $('#mac').prop('disabled',  false);
         $('#serial').prop('disabled',  false);
+        $('#onu_model').prop('disabled', false);
         $('#nap').prop('disabled',  false);
         $('#slot').prop('disabled',  false);
         $('#layer').prop('disabled',  false);
@@ -442,9 +466,9 @@ function selectSubs(el) {
         document.getElementById("bundle-4").style.display = "none";
         document.getElementById("bundle-5").style.display = "none";
         document.getElementById("bundle-6").style.display = "none";
-        document.getElementById("netOnly-1").style.display = "none";
-        document.getElementById("netOnly-2").style.display = "none";
-        document.getElementById("netOnly-3").style.display = "none";
+        document.getElementById("inetOnly-1").style.display = "none";
+        document.getElementById("inetOnly-2").style.display = "none";
+        document.getElementById("inetOnly-3").style.display = "none";
 }
 
 function selectOpt(el) {
