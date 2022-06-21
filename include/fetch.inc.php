@@ -37,7 +37,15 @@ $columns = array(
         'db'        => 'uid_',
         'dt'        => 11,
         'formatter' => function ($d, $row) {
-            return "<a href='options.php'>Options</a>";
+            return "<div class='optDiv'>
+                <i class='fas fa-cogs sett' onclick='showOpts(".$d.")'></i>
+                <ul name='opt_list' class='opt_list vieW".$d."' id='vieWList'>
+                    <li>Account Info</li>
+                    <li>Disconnect</li>
+                    <li class='del'>Delete</li>
+                </ul>
+                <div class='blocker'><div>
+            <div>";
         }
     )
 );

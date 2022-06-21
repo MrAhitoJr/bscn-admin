@@ -31,6 +31,7 @@ function loginUser($con, $name, $pass)
         session_start();
         $_SESSION["code"] = $userExist['u_code'];
         $_SESSION["name"] = $userExist['u_user'];
+        $_SESSION["_id"] = $userExist['u_id'];
         header("location: ../index.php");
         exit();
     }
