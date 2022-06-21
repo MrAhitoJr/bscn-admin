@@ -9,7 +9,7 @@
 <script>
 $(document).ready(function() {
     var t = $('#subscribers_list').DataTable({
-        // stateSave: true,
+        stateSave: true,
         responsive: true,
         info: "true",
         dom: 'Blfrtip',
@@ -38,7 +38,7 @@ $(document).ready(function() {
         }, {
             searchable: false,
             orderable: false,
-            targets: 0,
+            targets: [0, 11],
         }, ],
         order: [
             [1, 'asc']
@@ -63,6 +63,19 @@ $(document).ready(function() {
 
 function reloadTD() {
     $('#subscribers_list').DataTable().ajax.reload()
+}
+function showOpts(a){
+    // alert("vieW"+a);
+    $(".vieW"+a).addClass("viewOpt");
+}
+
+window.onclick = function(e) {
+    if (!e.target.matches('.sett')) {
+        var myDropdown = document.getElementById("vieWList");
+        // if (myDropdown.classList.contains('viewOpt')) {
+            myDropdown.classList.remove('viewOpt');
+        // }
+    }
 }
 </script>
 
