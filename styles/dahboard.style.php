@@ -34,6 +34,7 @@ table.dataTable thead tr {
 
 table.dataTable tbody tr {
     width: 100%;
+    text-transform: uppercase;
     min-height: 70px !important;
 }
 
@@ -109,5 +110,49 @@ table.dataTable tbody tr:hover>.sorting_1 {
 
 .ac {
     color: green;
+}
+.sett{
+    font-size:1.5em;
+    color: var(--secondary);
+    cursor: pointer;
+    transition: .3s all ease-in;
+}
+
+.sett:hover{
+    color: var(--tertiary);
+    transition: .3s all ease-out;
+}
+.opt_list{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    background-color: var(--shadow);
+    list-style-type: none;
+    color: var(--primary);
+    padding: 7px 0 ;
+    margin-top: -5px;
+    right: 5px;
+    border-radius: 4px;
+}
+.opt_list > li{
+    font-size: .9em;
+    text-transform: capitalize;
+    text-decoration: none;
+    margin: 0;
+    width: 116px;
+    padding: 5px 0;
+    cursor: pointer;
+}
+.opt_list > li:hover{
+    background-color: var(--fontDark);
+    color: var(--secondary);
+}
+/* .vieW3418, */
+ .viewOpt{
+    display: flex;
+}
+.del:hover{
+    background-color: firebrick !important;
+    color: var(--primary) !important;
 }
 </style>
